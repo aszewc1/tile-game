@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0px" y="0px" viewBox="0 0 320px 64px">
+    <g class="draggable-group" transform="translate(0, 6)">
+        <path d="M 0 0 L 6 -6 L 58 -6 L 64 0 L 32 32 Z" id="north" fill="red"/>
+        <text fill="white" x="28" y="17">N</text>
+        <path d="M 0 64 L 0 70 L 6 64 L 58 64 L 64 70 L 64 64 L 32 32 Z" id="south" fill="aqua"/>
+        <text fill="white" x="28" y="55">S</text>
+        <path d="M 64 0 L 32 32 L 64 64 Z" id="east" fill="blue"/>
+        <text fill="white" x="48" y="38">E</text>
+        <path d="M 0 0 L 32 32 L 0 64 Z" id="west" fill="green"/>
+        <text fill="white" x="5" y="38">W</text>
+    </g>
+</svg>
