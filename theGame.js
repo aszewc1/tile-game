@@ -1,103 +1,4 @@
 //
-// dragable and droppables for SVG (ignore this section)
-/**
-
-function makeDraggable(evt) {
-    var canvasWidth="128";//overlay.width;
-    var canvasHeight="256";//window.overlay.height;
-    
-    var svg = evt.target;
-    console.log(svg);
-    svg.addEventListener('mousedown', startDrag);
-    svg.addEventListener('mousemove', drag);
-    svg.addEventListener('mouseup', endDrag);
-    svg.addEventListener('mouseleave', endDrag);
-    svg.addEventListener('touchstart', startDrag);
-    svg.addEventListener('touchmove', drag);
-    svg.addEventListener('touchend', endDrag);
-    svg.addEventListener('touchleave', endDrag);
-    svg.addEventListener('touchcancel', endDrag);
-    function getMousePosition(evt) {
-        var CTM = svg.getScreenCTM();
-        if (evt.touches) { evt = evt.touches[0]; }
-        return {
-            x: (evt.clientX - CTM.e) / CTM.a,
-            y: (evt.clientY - CTM.f) / CTM.d
-        };
-    }
-    var selectedElement, offset, transform;
-    function initialiseDragging(evt) {
-        offset = getMousePosition(evt);
-
-        // Make sure the first transform on the element is a translate transform
-        var transforms = selectedElement.transform.baseVal;
-        if (transforms.length === 0 || transforms.getItem(0).type !== SVGTransform.SVG_TRANSFORM_TRANSLATE) {
-            // Create an transform that translates by (0, 0)
-            var translate = svg.createSVGTransform();
-            translate.setTranslate(0, 0);
-            selectedElement.transform.baseVal.insertItemBefore(translate, 0);
-        }
-
-        // Get initial translation
-        transform = transforms.getItem(0);
-        offset.x -= transform.matrix.e;
-        offset.y -= transform.matrix.f;
-    }
-    function startDrag(evt) {
-        if (evt.target.classList.contains('draggable')) {
-            selectedElement = evt.target;
-            initialiseDragging(evt);
-        }
-        else if (evt.target.parentNode.classList.contains('draggable-group')) {
-            selectedElement = evt.target.parentNode;
-            initialiseDragging(evt);
-        }
-    }
-    function drag(evt) {
-        if (selectedElement) {
-            evt.preventDefault();
-            var coord = getMousePosition(evt);
-            transform.setTranslate(coord.x - offset.x, coord.y - offset.y);
-            var str = "X: " + (coord.x - offset.x) + " Y: " + (coord.y - offset.y);
-            console.log(str);
-
-            //var canMouseX=parseInt(evt.clientX-offsetX);
-            //var canMouseY=parseInt(evt.clientY-offsetY);
-            //ctxt.clearRect(0,0,canvasWidth,canvasHeight);
-            //ctxt.drawImage(selectedElement,canMouseX-128/2,canMouseY-120/2,128,120);
-
-            selectedElement.hidden = true;
-            let elemBelow = document.elementFromPoint(event.clientX, event.clientY);
-            selectedElement.hidden = false;
-
-            if (!elemBelow) return;
-
-            let droppableBelow = elemBelow.closest(".droppable");
-            if (currentDroppable != droppableBelow) {
-                if (currentDroppable) { // null when we were not over a droppable before this event
-                    leaveDroppable(currentDroppable);
-                }
-                currentDroppable = droppableBelow;
-                if (currentDroppable) { // null if we're not coming over a droppable now
-                    // (maybe just left the droppable)
-                    enterDroppable(currentDroppable);
-                }
-            }
-        }
-    }
-    function endDrag(evt) {
-        selectedElement = false;
-    }
-    function enterDroppable(elem) {
-        elem.style.background = 'pink';
-    }
-    function leaveDroppable(elem) {
-        elem.style.background = '';
-    }
-}
-*/
-
-//
 // draggable canvas elements
 //
 
@@ -1329,6 +1230,7 @@ function newJset(s) {
 var set;
 var Hset;
 var Jset;
+var MYset;
 
 window.onload = function () {
     dragIt();
@@ -1361,6 +1263,9 @@ chooseGame = function (t) {
         Jset = new Set();
         newJset(Jset);
         set = Jset;
+    }
+    else if (t == "U") {
+        set = MYset;
     }
     Game.run();
 }
