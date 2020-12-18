@@ -43,31 +43,19 @@ if ( isset($_POST["submit"]) ) {
 ini_set('auto_detect_line_endings', true);
 if (isset($target_file) && ($file = fopen($target_file , 'r' )) !== FALSE) {
   echo "File opened.<br />";
-?>
-
-<script type="text/javascript" src="theGame.js">
-  MYset = new Set();
-</script>
-
-<?php
   $row = 1;
+  $fullData = [];
   while (($data = fgetcsv($file, 1000, ",")) !== FALSE) {
+    $fullData[] = $data;
     $num = count($data);
     echo "<p> $num fields in line $row: <br /></p>\n";
     $row++;
-?>
-
-<script type="text/javascript" src="theGame.js">
-  var temp = <?php echo json_encode($data); ?>;
-  MYset.add(new Tile(temp[0], temp[1], temp[2], temp[3], temp[4]));
-</script>
-
-<?php
     for ($c=0; $c < $num; $c++) {
         echo $data[$c] . "<br />\n";
     }
   }
   fclose($file);
+  $_SESSION['datas'] = $fullData;
   header("Location: ../home.php?upload=success");
   exit();
 }

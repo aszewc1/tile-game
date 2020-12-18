@@ -31,8 +31,16 @@
                     ?>
                 </div>
                 <div class="gameselect">
-                    <input type="radio" onclick="if(this.checked){chooseGame('U')}" id="Upload" name="game">
-                    <label for="Upload"><a href="upload.php" class="hbtn">Upload</a></label>
+                    <?php
+                        if (isset($_SESSION['datas'])) {
+                            echo '<input type="radio" onclick="if(this.checked){chooseGame("U")}" id="Upload" name="game">';
+                            echo '<label for="Upload" class="hbtn">Play Upload</label>';
+                        }
+                        else {
+                            echo '<input type="radio" id="Upload" name="game">';
+                            echo '<label for="Upload"><a href="upload.php" class="hbtn">Upload</a></label>';
+                        }
+                    ?>
                     <input type="radio" onclick="if(this.checked){chooseGame('H')}" id="Hanf" name="game">
                     <label for="Hanf" class="hbtn">Hanf</label>
                     <input type="radio" onclick="if(this.checked){chooseGame('J')}" id="Jockusch" name="game">
