@@ -55,6 +55,7 @@ if (isset($target_file) && ($file = fopen($target_file , 'r' )) !== FALSE) {
     }
   }
   fclose($file);
+  session_start();
   $_SESSION['datas'] = $fullData;
   header("Location: ../home.php?upload=success");
   exit();

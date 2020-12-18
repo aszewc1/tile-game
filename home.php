@@ -33,8 +33,11 @@
                 <div class="gameselect">
                     <?php
                         if (isset($_SESSION['datas'])) {
-                            echo '<input type="radio" onclick="if(this.checked){chooseGame("U")}" id="Upload" name="game">';
-                            echo '<label for="Upload" class="hbtn">Play Upload</label>';
+                            echo '<form action="includes/logout.inc.php" method="post" style="margin=0; width=76px; display: inline-block">
+                                    <input type="submit" name="logout-submit" value="Clear" class="hbtn" style="background-color: #0071E3">
+                                  </form>';
+                            echo '<input type="radio" onclick="if(this.checked){chooseGame()}" id="Play_Upload" name="game">';
+                            echo '<label for="Play_Upload" class="hbtn">Play Upload</label>';
                         }
                         else {
                             echo '<input type="radio" id="Upload" name="game">';

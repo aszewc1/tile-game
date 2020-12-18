@@ -1239,7 +1239,7 @@ window.onload = function () {
 /* function for changing the gamemode
  * @param t     the character representing the game
  */
-chooseGame = function (t) {
+chooseGame = function (t = "U") {
     map.board[0] = [
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -1267,6 +1267,7 @@ chooseGame = function (t) {
     else if (t == "U") {
         console.log("Made it to U if");
         MYset = new Set();
+        <?php session_start(); ?>
         var multiArr = <?php echo json_encode($_SESSION['datas']); ?>;
         for (var i = 0; i < multiArr.length; i++) {
             var T = multiArr[i];
