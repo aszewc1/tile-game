@@ -1266,13 +1266,6 @@ chooseGame = function (t = "U") {
     }
     else if (t == "U") {
         console.log("Made it to U if");
-        MYset = new Set();
-        <?php session_start(); ?>
-        var multiArr = <?php echo json_encode($_SESSION['datas']); ?>;
-        for (var i = 0; i < multiArr.length; i++) {
-            var T = multiArr[i];
-            MYset.add(new Tile(T[0], T[1], T[2], T[3], T[4]));
-        }
         set = MYset;
     }
     Game.run();

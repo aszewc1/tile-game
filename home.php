@@ -34,8 +34,21 @@
                     <?php
                         if (isset($_SESSION['datas'])) {
                             echo '<form action="includes/logout.inc.php" method="post" style="margin=0; width=76px; display: inline-block">
-                                    <input type="submit" name="logout-submit" value="Clear" class="hbtn" style="background-color: #0071E3">
+                                    <input type="submit" name="logout-submit" value="Clear Upload" class="hbtn" style="background-color: #0071E3">
                                   </form>';
+                    ?>
+
+                    <script>
+                        MYset = new Set();
+                        var multiArr = <?php echo json_encode($_SESSION['datas']); ?>;
+                        for (var i = 0; i < multiArr.length; i++) {
+                            console.log("in loop");
+                            var T = multiArr[i];
+                            MYset.add(new Tile(T[0], T[1], T[2], T[3], T[4]));
+                        }
+                    </script>
+
+                    <?php
                             echo '<input type="radio" onclick="if(this.checked){chooseGame()}" id="Play_Upload" name="game">';
                             echo '<label for="Play_Upload" class="hbtn">Play Upload</label>';
                         }
