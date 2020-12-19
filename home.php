@@ -42,7 +42,6 @@
                         MYset = new Set();
                         var multiArr = <?php echo json_encode($_SESSION['datas']); ?>;
                         for (var i = 0; i < multiArr.length; i++) {
-                            console.log("in loop");
                             var T = multiArr[i];
                             MYset.add(new Tile(T[0], T[1], T[2], T[3], T[4]));
                         }

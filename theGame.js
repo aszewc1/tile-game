@@ -655,37 +655,37 @@ function Tile (numID, n, s, e, w) {
 
         /*if (!document.getElementById("Hanf").checked ||
             !document.getElementById("Jockusch").checked) {*/
-            if (num == 1) {
-                color = "#d6d6d6";
+
+        if (num == 1) {
+            color = "#d6d6d6";
+        }
+        else if (num == 0) {
+            color = "black";
+        }
+        else {
+            switch (num % 7) {
+                case 0:
+                    color = "red";
+                    break;
+                case 1:
+                    color = "orange";
+                    break;
+                case 2:
+                    color = "yellow";
+                    break;
+                case 3:
+                    color = "green";
+                    break;
+                case 4:
+                    color = "blue";
+                    break;
+                case 5:
+                    color = "indigo";
+                    break;
+                default:
+                    color = "violet";
             }
-            else if (num == 0) {
-                color = "black";
-            }
-            else {
-                switch (num % 7) {
-                    case 0:
-                        color = "red";
-                        break;
-                    case 1:
-                        color = "orange";
-                        break;
-                    case 2:
-                        color = "yellow";
-                        break;
-                    case 3:
-                        color = "green";
-                        break;
-                    case 4:
-                        color = "blue";
-                        break;
-                    case 5:
-                        color = "indigo";
-                        break;
-                    default:
-                        color = "violet";
-                }
-            }
-        //}
+        }
 
         return color;
     };
@@ -738,7 +738,7 @@ function Tile (numID, n, s, e, w) {
         var txt = document.createTextNode(num);
         t.appendChild(txt);
         group.appendChild(t);
-    }
+    };
 
     /* function for creating a tile SVG element
      * @return      the SVG image for a tile
@@ -1265,8 +1265,19 @@ chooseGame = function (t = "U") {
         set = Jset;
     }
     else if (t == "U") {
-        console.log("Made it to U if");
         set = MYset;
+        map.board[0] = [
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+        ];
     }
     Game.run();
 }
