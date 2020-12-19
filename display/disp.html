@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="style.css" />
+        <script src="theGame.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Tiling | User</title>
+    </head>
+    <body>
+        <div class="domain">
+            <h1>Tiles</h1>
+            <div class="radioSelect">
+                <div class="gameselect">
+                    <input type="radio" onclick="if(this.checked){chooseGame('H')}" id="Hanf" name="game">
+                    <label for="Hanf" class="hbtn">Hanf</label>
+                    <input type="radio" onclick="if(this.checked){chooseGame('J')}" id="Jockusch" name="game">
+                    <label for="Jockusch" class="hbtn">Jockusch</label>
+                    <div class="check"></div>
+                </div>
+                <br><p></p>
+                <container class="gameControl">
+                    <div class="scrollMenu" id="menuRef">
+                        <p>Saved games will go here</p>
+                    </div>
+                </container>
+            </div>
+        </div>
+    </body>
+</html>
