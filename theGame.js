@@ -634,7 +634,7 @@ function Tile (numID, n, s, e, w) {
      * @return        the fill color specified
      */
     this.translateColor = function (num) {
-        var color;
+        var color = "white";
         
         /*switch (num) {
             case 1:
@@ -653,8 +653,8 @@ function Tile (numID, n, s, e, w) {
                 color = "#fff";
         }*/
 
-        if (document.getElementById("Hanf").checked ||
-            document.getElementById("Jockusch").checked) {
+        /*if (!document.getElementById("Hanf").checked ||
+            !document.getElementById("Jockusch").checked) {*/
             if (num == 1) {
                 color = "#d6d6d6";
             }
@@ -685,7 +685,7 @@ function Tile (numID, n, s, e, w) {
                         color = "violet";
                 }
             }
-        }
+        //}
 
         return color;
     };
@@ -725,8 +725,8 @@ function Tile (numID, n, s, e, w) {
         }
 
         var t = document.createElementNS("http://www.w3.org/2000/svg", "text");
-        if (num % 7 == 2 && (document.getElementById("Hanf").checked ||
-                                  document.getElementById("Jockusch").checked)) {
+        if (num % 7 == 2 /*&& (document.getElementById("Hanf").checked ||
+                                  document.getElementById("Jockusch").checked)*/) {
             t.setAttributeNS(null, "fill", "black");
         }
         else {
