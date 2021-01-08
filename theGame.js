@@ -358,20 +358,30 @@ var Game = {
     /* saves the current game into database for user
      */
     save: function() {
-        var tGame, JParam, xmlhttp, mode = "";
-        tGame = { "state":map.board[0] };
-        JParam = JSON.stringify(tGame);
+        alert("made it to save function");
+        console.log("logging");
+        var mode = "";
+        var tGame = map.board[0];
+        var JParam = JSON.stringify(tGame);
 
         if (document.getElementById("Hanf").checked) {
             mode = "Hanf";
         }
-        else {
+        else if (document.getElementById("Jockusch").checked){
             mode = "Jockusch";
         }
+        else {
+            mode = "Upload";
+        }
 
-        xmlhttp = new XMLHttpRequest();
-        xmlhttp.open("POST", "/includes/save.inc.php", true);
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.open("POST", "./includes/save.inc.php", true);
         xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState === 4 || this.status === 200){ 
+                console.log(this.responseText); // echo from php
+            }       
+        };
         xmlhttp.send("rows=" + map.rows + "cols=" + map.cols + "set" + mode + "state=" + JParam);
     },
 
@@ -1235,6 +1245,10 @@ var MYset;
 window.onload = function () {
     dragIt();
 };
+
+savegame = function () {
+    Game.save();
+}
 
 /* function for changing the gamemode
  * @param t     the character representing the game

@@ -20,9 +20,7 @@
                             echo '<form action="includes/logout.inc.php" method="post" style="margin=0; width=76px; display: inline-block">
                                     <input type="submit" name="logout-submit" value="Logout" class="hbtn" style="background-color: #0071E3">
                                   </form>';
-                            echo '<form action="includes/save.inc.php" method="get" style="margin=0; width=76px; display: inline-block">
-                                    <input type="submit" name="save-submit" value="Save Game" class="hbtn" onclick="Game.save()">
-                                  </form>';
+                            echo '<input type="button" class="hbtn" onclick="savegame();" value="Save Game" style="margin: 0; width: 120px; display: inline-block">';
                         }
                         else {
                             echo '<a href="home.php" class="hbtn">Welcome, Guest</a>';
