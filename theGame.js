@@ -358,8 +358,7 @@ var Game = {
     /* saves the current game into database for user
      */
     save: function() {
-        alert("made it to save function");
-        console.log("logging");
+        console.log("saving...");
         var mode = "";
         var tGame = map.board[0];
         var JParam = JSON.stringify(tGame);
@@ -375,14 +374,14 @@ var Game = {
         }
 
         var xmlhttp = new XMLHttpRequest();
-        xmlhttp.open("POST", "./includes/save.inc.php", true);
+        xmlhttp.open("POST", "includes/save.inc.php", true);
         xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xmlhttp.onreadystatechange = function() {
             if (this.readyState === 4 || this.status === 200){ 
-                console.log(this.responseText); // echo from php
+                var dummy = this.responseText; // echo from php
             }       
         };
-        xmlhttp.send("rows=" + map.rows + "cols=" + map.cols + "set" + mode + "state=" + JParam);
+        xmlhttp.send("rows=" + map.rows + "&cols=" + map.cols + "&set=" + mode + "&state=" + JParam);
     },
 
     /* restores a chosen game from database for user
