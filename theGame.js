@@ -527,6 +527,7 @@ var Game = {
 var map = {
     cols: 15,
     rows: 10,
+    tiles_placed: 0,
     tsize: 64,
     board: [[
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -550,6 +551,17 @@ var map = {
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+    ], [
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
     ]],
     /* function for reading a tile
      * @param col     the column
@@ -566,6 +578,18 @@ var map = {
      */
     setTile: function (col, row, num) {
         this.board[0][row * map.cols + col] = num;
+        this.board[2][row * map.cols + col] = ++this.tiles_placed;
+    },
+    /* function for undoing last move
+     */
+    undoMove: function () {
+        for (i = 0; i < this.rows * this.cols; i++) {
+            if (this.board[2][i] == this.tiles_placed) {
+                this.board[0][i] = 0;
+                this.tiles_placed--;
+                break;
+            }
+        }
     },
     /* adds visible row between border of map and visible map
      * @param r        the index where the row needs to be added
@@ -1246,7 +1270,12 @@ window.onload = function () {
 };
 
 savegame = function () {
-    Game.save();
+    if (map.tiles_placed == 0) {
+        alert("No game in progress!");
+    }
+    else {
+        Game.save();
+    }
 }
 
 /* function for changing the gamemode
