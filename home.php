@@ -13,7 +13,7 @@
         <div class="domain">
             <h1>Tiling Game</h1>
             <div class="radioSelect">
-                <div class="loginfo">
+                <div class="loginfo" id="select-bar">
                     <?php
                         if (isset($_SESSION['userID'])) {
                             echo '<a href="home.php" class="hbtn">Welcome, '.$_SESSION['userMail'].'</a>';

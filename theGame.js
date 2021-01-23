@@ -317,6 +317,17 @@ var Game = {
         controls.appendChild(svBtn);*/
         disp.appendChild(controls);
 
+        if (!document.getElementById("undo-button")) {
+            var selectBar = document.getElementById("select-bar");
+            var undoBtn = document.createElement("BUTTON");
+            undoBtn.setAttribute("class", "hbtn");
+            undoBtn.setAttribute("id", "undo-button");
+            undoBtn.style.width = "auto";
+            undoBtn.textContent = "Undo";
+            undoBtn.onclick = function() { map.undoMove(); }
+            selectBar.appendChild(undoBtn);
+        }
+
         Game.ctx = board.getContext("2d");
         Game._previousElapsed = 0;
         
@@ -583,12 +594,18 @@ var map = {
     /* function for undoing last move
      */
     undoMove: function () {
-        for (i = 0; i < this.rows * this.cols; i++) {
-            if (this.board[2][i] == this.tiles_placed) {
-                this.board[0][i] = 0;
-                this.tiles_placed--;
-                break;
+        if (this.tiles_placed > 0) {
+            for (i = 0; i < this.rows * this.cols; i++) {
+                if (this.board[2][i] == this.tiles_placed) {
+                    this.board[0][i] = 0;
+                    this.board[2][i] = 0;
+                    this.tiles_placed--;
+                    break;
+                }
             }
+        }
+        else {
+            alert("Nothing to undo");
         }
     },
     /* adds visible row between border of map and visible map
@@ -598,6 +615,7 @@ var map = {
         this.rows++;
         for (var i = 0; i < this.cols; i++) {
             this.board[0].splice(r * this.cols, 0, 0);
+            this.board[2].splice(r * this.cols, 0, 0);
         }
         Game.camera.maxY = (this.rows - 1) * this.tsize - Game.camera.height;
         if (r == 1) {
@@ -611,6 +629,7 @@ var map = {
         this.cols++;
         for (var i = 0; i < this.rows; i++) {
             this.board[0].splice(c + this.cols * i, 0, 0);
+            this.board[2].splice(c + this.cols * i, 0, 0);
         }
         Game.camera.maxX = (this.cols - 1) * this.tsize - Game.camera.width;
         if (c == 1) {
@@ -1275,6 +1294,7 @@ savegame = function () {
     }
     else {
         Game.save();
+        alert("Game saved!")
     }
 }
 
