@@ -36,7 +36,7 @@
                 <div class="gameselect">
                     <?php
                         if (isset($_SESSION['datas'])) {
-                            echo '<form action="includes/logout.inc.php" method="post" style="margin=0; width=76px; display: inline-block">
+                            echo '<form action="includes/clear.inc.php" method="post" style="margin=0; width=76px; display: inline-block">
                                     <input type="submit" name="logout-submit" value="Clear Upload" class="hbtn" style="background-color: #0071E3">
                                   </form>';
                     ?>
@@ -80,8 +80,20 @@
                         </div>
                     </div>
                     <div class="scrollMenu" id="menuRef">
-                        <div style="text-align: left; padding: 5px;">    
-                            <p>Saved games coming soon!</p>
+                        <div style="text-align: left; padding: 5px;">
+                            <?php
+                            if (isset($_SESSION['userID'])) {
+                                include('dbh.inc.php');
+                                $sqlget = 'SELECT * FROM games WHERE idUsers='.$_SESSION['userID'];
+                                $sqldata = mysqli_query($conn, $sqlget) or die("Error: could not retrieve games.");
+                                while ($row = mysqli_fetch_array($sqldata, MYSQLI_ASSOC)) {
+                                    echo '<input type=\"button\" class=\"hbtn\" onclick=\"savegame();\" value=\"'.$row['gameType'].' Game '.$row['idGame'].'\" style=\"margin: 0; width: 120px; display: inline-block\">';
+                                }
+                            }
+                            else {
+                                echo '<p>Create account or login to display saved games.</p>';
+                            }
+                            ?>
                         </div>
                     </div>
                 </container>
