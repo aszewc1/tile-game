@@ -83,12 +83,28 @@
                         <div style="text-align: left; padding: 5px;">
                             <?php
                             if (isset($_SESSION['userID'])) {
-                                include('dbh.inc.php');
-                                $sqlget = 'SELECT * FROM games WHERE idUsers='.$_SESSION['userID'];
-                                $sqldata = mysqli_query($conn, $sqlget) or die("Error: could not retrieve games.");
-                                while ($row = mysqli_fetch_array($sqldata, MYSQLI_ASSOC)) {
-                                    echo '<input type=\"button\" class=\"hbtn\" onclick=\"savegame();\" value=\"'.$row['gameType'].' Game '.$row['idGame'].'\" style=\"margin: 0; width: 120px; display: inline-block\">';
+                                require './includes/dbh.inc.php';
+                                $sql = 'SELECT * FROM games WHERE idUsers=?';
+                                $stmt = mysqli_stmt_init($conn);
+                                if (!mysqli_stmt_prepare($stmt, $sql)) {
+                                    header("Location: ../home.php?error=sqlerror&games-fail-load");
+                                    exit();
                                 }
+                                else {
+                                    mysqli_stmt_bind_param($stmt, "i", $_SESSION['userID']);
+                                    mysqli_stmt_execute($stmt);
+                                    $result = mysqli_stmt_get_result($stmt);
+                                    while ($row = mysqli_fetch_assoc($result)) {
+                                        echo '<p>'.$row['gameType'].' Game</p>';
+                                        echo '<form action="includes/load.inc.php" method="post" style="margin=0; width=76px; display: inline-block">
+                                                <input type="number" name="idval" value="'.$row['idGame'].'">
+                                                <input type="submit" name="load-submit" value="'.$row['idGame'].'" class="hbtn" style="background-color: #0071E3">
+                                              </form>';
+                                        //echo '<input type="button" class="hbtn" onclick="savegame();" value="'.$row['idGame'].'" style="margin: 0; width: 120px; display: inline-block">';
+                                    }
+                                }
+                                mysqli_stmt_close($stmt);
+                                mysqli_close($conn);
                             }
                             else {
                                 echo '<p>Create account or login to display saved games.</p>';
@@ -100,4 +116,20 @@
             </div>
         </div>
     </body>
+    
+    <?php
+        if (isset($_SESSION['gameID'])) {
+    ?>
+
+    <script>
+        Game.restore(<?php echo json_encode($_SESSION['row_load']); ?>,
+                     <?php echo json_encode($_SESSION['col_load']); ?>,
+                     <?php echo json_encode($_SESSION['typ_load']); ?>,
+                     <?php echo json_encode($_SESSION['stt_load']); ?>);
+    </script>
+
+    <?php
+        }
+    ?>
+
 </html>

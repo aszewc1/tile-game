@@ -396,9 +396,30 @@ var Game = {
     },
 
     /* restores a chosen game from database for user
+     * @param r      rows in map
+     * @param c      cols in map
+     * @param t      type of game
+     * @param Jmap    JSON encoded map for game
      */
-    restore: function() {
-        //TODO
+    restore: function(r, c, t, Jmap) {
+        var temp = JSON.parse(Jmap);
+        map.board[0] = Jmap;
+        map.rows = r;
+        map.cols = c;
+        if (t == "Hanf") {
+            Hset = new Set();
+            newHset(Hset);
+            set = Hset;
+        }
+        else if (t == "Jockusch") {
+            Jset = new Set();
+            newJset(Jset);
+            set = Jset;
+        }
+        else {
+            set = MYset;
+        }
+        Game.run();
     },
 
     /* performs "ticks" to segment movement animation

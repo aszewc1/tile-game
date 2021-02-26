@@ -15,18 +15,35 @@ if (array_key_exists('rows', $_POST) && array_key_exists('cols', $_POST) &&
         exit();
     }
     else {
-        $sql = "INSERT INTO games (idUsers, gameRow, gameCol, gameType, gameState) VALUES (?, ?, ?, ?, ?)";
-        $stmt = mysqli_stmt_init($conn);
-        if (!mysqli_stmt_prepare($stmt, $sql)) {
-            header("Location: ../home.php?error=sqlerror");
-            exit();
+        if (isset($_SESSION['gameID'])) {
+            $sql = 'UPDATE games SET gameRow="'.$rows.'", gameCol="'.$cols.'", gameState="'.$state.'" WHERE idGame="'.$_SESSION['gameID'].'"';
+            $stmt = mysqli_stmt_init($conn);
+            if (!mysqli_stmt_prepare($stmt, $sql)) {
+                header("Location: ../home.php?error=sqlerror");
+                exit();
+            }
+            else {
+                mysqli_stmt_bind_param($stmt, "iiiss", $_SESSION['userID'], $rows, $cols, $game, $state);
+                mysqli_stmt_execute($stmt);
+                echo 'saved';
+                header("Location: ../home.php?update=success");
+                exit();
+            }
         }
         else {
-            mysqli_stmt_bind_param($stmt, "iiiss", $_SESSION['userID'], $rows, $cols, $game, $state);
-            mysqli_stmt_execute($stmt);
-            echo 'saved';
-            header("Location: ../home.php?save=success");
-            exit();
+            $sql = "INSERT INTO games (idUsers, gameRow, gameCol, gameType, gameState) VALUES (?, ?, ?, ?, ?)";
+            $stmt = mysqli_stmt_init($conn);
+            if (!mysqli_stmt_prepare($stmt, $sql)) {
+                header("Location: ../home.php?error=sqlerror");
+                exit();
+            }
+            else {
+                mysqli_stmt_bind_param($stmt, "iiiss", $_SESSION['userID'], $rows, $cols, $game, $state);
+                mysqli_stmt_execute($stmt);
+                echo 'saved';
+                header("Location: ../home.php?save=success");
+                exit();
+            }
         }
     }
 
