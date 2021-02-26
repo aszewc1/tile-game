@@ -97,7 +97,7 @@
                                     while ($row = mysqli_fetch_assoc($result)) {
                                         echo '<p>'.$row['gameType'].' Game</p>';
                                         echo '<form action="includes/load.inc.php" method="post" style="margin=0; width=76px; display: inline-block">
-                                                <input type="number" name="idval" value="'.$row['idGame'].'">
+                                                <input type="number" name="idval" value="'.$row['idGame'].'" style="visibility: hidden">
                                                 <input type="submit" name="load-submit" value="'.$row['idGame'].'" class="hbtn" style="background-color: #0071E3">
                                               </form>';
                                         //echo '<input type="button" class="hbtn" onclick="savegame();" value="'.$row['idGame'].'" style="margin: 0; width: 120px; display: inline-block">';
@@ -115,21 +115,26 @@
                 </container>
             </div>
         </div>
+
+        <?php
+            if (isset($_SESSION['gameID'])) {
+                echo "hi";
+        ?>
+
+        <script>
+            console.log("loading game...");
+            Game.restore(<?php echo $_SESSION['row_load']; ?>,
+                        <?php echo $_SESSION['col_load']; ?>,
+                        <?php echo $_SESSION['typ_load']; ?>,
+                        <?php echo json_encode($_SESSION['stt_load']); ?>);
+        </script>
+
+        <?php
+            }
+            else {
+                echo "shit";
+            }
+        ?>
+
     </body>
-    
-    <?php
-        if (isset($_SESSION['gameID'])) {
-    ?>
-
-    <script>
-        Game.restore(<?php echo json_encode($_SESSION['row_load']); ?>,
-                     <?php echo json_encode($_SESSION['col_load']); ?>,
-                     <?php echo json_encode($_SESSION['typ_load']); ?>,
-                     <?php echo json_encode($_SESSION['stt_load']); ?>);
-    </script>
-
-    <?php
-        }
-    ?>
-
 </html>

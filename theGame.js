@@ -402,7 +402,6 @@ var Game = {
      * @param Jmap    JSON encoded map for game
      */
     restore: function(r, c, t, Jmap) {
-        var temp = JSON.parse(Jmap);
         map.board[0] = Jmap;
         map.rows = r;
         map.cols = c;

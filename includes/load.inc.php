@@ -1,4 +1,5 @@
 <?php
+session_start();
 header("Content-Type: application/json; charset=UTF-8");
 require 'dbh.inc.php';
 
@@ -19,7 +20,7 @@ else {
         $_SESSION['row_load'] = $row['gameRow'];
         $_SESSION['col_load'] = $row['gameCol'];
         $_SESSION['typ_load'] = $row['gameType'];
-        $_SESSION['stt_load'] = $row['gameState'];
+        $_SESSION['stt_load'] = json_decode($row['gameState']);
         header("Location: ../home.php?load=success");
         exit();
     }
@@ -27,15 +28,3 @@ else {
 
 mysqli_stmt_close($stmt);
 mysqli_close($conn);
-
-/*header("Content-Type: application/json; charset=UTF-8");
-$obj = json_decode($_POST["x"], false);
-
-$conn = new mysqli("myServer", "myUser", "myPassword", "Northwind");
-$stmt = $conn->prepare("SELECT name FROM customers LIMIT ?");
-$stmt->bind_param("s", $obj->limit);
-$stmt->execute();
-$result = $stmt->get_result();
-$outp = $result->fetch_all(MYSQLI_ASSOC);
-
-echo json_encode($outp);*/
