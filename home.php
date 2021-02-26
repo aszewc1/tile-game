@@ -16,7 +16,7 @@
                 <div class="loginfo" id="select-bar">
                     <?php
                         if (isset($_SESSION['userID'])) {
-                            echo '<a href="home.php" class="hbtn">Welcome, '.$_SESSION['userMail'].'</a>';
+                            echo '<a href="" class="hbtn">Welcome, '.$_SESSION['userMail'].'</a>';
                             echo '<form action="includes/logout.inc.php" method="post" style="margin=0; width=76px; display: inline-block">
                                     <input type="submit" name="logout-submit" value="Logout" class="hbtn" style="background-color: #0071E3">
                                   </form>';
@@ -118,21 +118,18 @@
 
         <?php
             if (isset($_SESSION['gameID'])) {
-                echo "hi";
         ?>
 
         <script>
             console.log("loading game...");
+            console.log("<?php echo $_SESSION['typ_load']; ?>");
             Game.restore(<?php echo $_SESSION['row_load']; ?>,
                         <?php echo $_SESSION['col_load']; ?>,
-                        <?php echo $_SESSION['typ_load']; ?>,
+                        "<?php echo $_SESSION['typ_load']; ?>",
                         <?php echo json_encode($_SESSION['stt_load']); ?>);
         </script>
 
         <?php
-            }
-            else {
-                echo "shit";
             }
         ?>
 

@@ -405,12 +405,12 @@ var Game = {
         map.board[0] = Jmap;
         map.rows = r;
         map.cols = c;
-        if (t == "Hanf") {
+        if (t == "H") {
             Hset = new Set();
             newHset(Hset);
             set = Hset;
         }
-        else if (t == "Jockusch") {
+        else if (t == "J") {
             Jset = new Set();
             newJset(Jset);
             set = Jset;

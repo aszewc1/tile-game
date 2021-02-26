@@ -19,7 +19,7 @@ else {
         $_SESSION['gameID'] = $game_num;
         $_SESSION['row_load'] = $row['gameRow'];
         $_SESSION['col_load'] = $row['gameCol'];
-        $_SESSION['typ_load'] = $row['gameType'];
+        $_SESSION['typ_load'] = substr($row['gameType'], 0, 1);
         $_SESSION['stt_load'] = json_decode($row['gameState']);
         header("Location: ../home.php?load=success");
         exit();
