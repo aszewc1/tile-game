@@ -18,17 +18,15 @@ if (array_key_exists('rows', $_POST) && array_key_exists('cols', $_POST) &&
         if (isset($_SESSION['gameID'])) {
             $sql = 'UPDATE games SET gameRow=?, gameCol=?, gameState=? WHERE idGame=?';
             $stmt = mysqli_stmt_init($conn);
-            echo "enter if";
             if (!mysqli_stmt_prepare($stmt, $sql)) {
-                //header("Location: ../home.php?error=sqlerror");
-                //exit();
+                header("Location: ../home.php?error=sqlerror");
+                exit();
             }
             else {
-                mysqli_stmt_bind_param($stmt, "iisi", $_SESSION['userID'], $rows, $cols, $state, $_SESSION['gameID']);
+                mysqli_stmt_bind_param($stmt, "iisi", $rows, $cols, $state, $_SESSION['gameID']);
                 mysqli_stmt_execute($stmt);
-                echo 'saved';
-                //header("Location: ../home.php?update=success");
-                //exit();
+                header("Location: ../home.php?update=success");
+                exit();
             }
         }
         else {
@@ -45,7 +43,6 @@ if (array_key_exists('rows', $_POST) && array_key_exists('cols', $_POST) &&
                 if ($row = mysqli_fetch_assoc($result)) {
                     $_SESSION['gameID'] = $row['idGame'];
                 }
-                echo 'saved';
                 header("Location: ../home.php?save=success");
                 exit();
             }

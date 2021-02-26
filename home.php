@@ -16,7 +16,9 @@
                 <div class="loginfo" id="select-bar">
                     <?php
                         if (isset($_SESSION['userID'])) {
-                            echo '<a href="" class="hbtn">Welcome, '.$_SESSION['userMail'].'</a>';
+                            echo '<form action="includes/exit.inc.php" method="post" style="margin=0; width=76px; display: inline-block">
+                                    <input type="submit" name="exit-submit" value="Welcome, '.$_SESSION['userMail'].'" class="hbtn" style="background-color: #0071E3">
+                                  </form>';
                             echo '<form action="includes/logout.inc.php" method="post" style="margin=0; width=76px; display: inline-block">
                                     <input type="submit" name="logout-submit" value="Logout" class="hbtn" style="background-color: #0071E3">
                                   </form>';
