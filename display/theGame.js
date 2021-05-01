@@ -319,6 +319,15 @@ var Game = {
         return array;
     },
 
+    download: function(href, name){
+        var link = document.createElement('a');
+        link.download = name;
+        link.href = href;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    },
+
     /* initializes game by starting up keyboard
      * listening object
      */
@@ -326,13 +335,20 @@ var Game = {
         Keyboard.listenForEvents([Keyboard.LEFT, Keyboard.RIGHT, Keyboard.UP, Keyboard.DOWN]);
         
         //Game.tileAtlas = Loader.getImage("Hset");
-        Game._fillMenu();
+        var zip = new JSZip();
+        Game._fillMenu(zip);
+        zip.generateAsync({type:"blob"})
+        .then(function(content) {
+            content = URL.createObjectURL(content);
+            let name = `JSJeep.zip`;
+            Game.download(content, "example.zip");
+        });
     },
 
     /* fills the menu (only on load and when the set
      * is changed)
      */
-    _fillMenu: function () {
+    _fillMenu: function (zip) {
         var ref = document.getElementById("menuRef");
         while (ref.hasChildNodes()) {  
             ref.removeChild(ref.firstChild);
@@ -340,6 +356,17 @@ var Game = {
         for (var c = 1; c < set.arr.length; c++) {
             ref.appendChild(set.arr[c].pic);
             console.log(typeof(Loader.getImage(c)));
+            
+            let canvas = document.createElement('canvas');
+   
+            canvas.widht = 64;
+            canvas.height = 76;
+            let context = canvas.getContext('2d');
+            context.drawImage(Loader.getImage(c), 0, 0, 64, 76 );
+            let jpg = canvas.toDataURL('image/jpg');
+            var idx = jpg.indexOf('base64,') + 'base64,'.length;
+            var base = jpg.substring(idx);
+            zip.file(c + ".jpeg", base, {base64 : true});
         }
     },
 
@@ -470,26 +497,6 @@ function Tile (numID, n, s, e, w) {
      */
     this.translateColor = function (num) {
         var color = "white";
-        
-        /*switch (num) {
-            case 1:
-                color = "#f5f5f5";
-                break;
-            case 2:
-                color = "#ff3b05";
-                break;
-            case 3:
-                color = "#68ff3b";
-                break;
-            case 4:
-                color = "#3e0be6";
-                break;
-            default:
-                color = "#fff";
-        }*/
-
-        /*if (!document.getElementById("Hanf").checked ||
-            !document.getElementById("Jockusch").checked) {*/
 
         if (num == 1) {
             color = "#d6d6d6";
