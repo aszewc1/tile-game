@@ -36,7 +36,7 @@
                         Welcome to the Tiling Game! To play, first select one of the two gamemodes: Hanf or Jockusch.
                         These gamemodes are named after some famous logicians.
                         <br><br>
-                        Login and signup now work! Social signup is still in progress.
+                        Sign up or login to play, or play as guest without saved games.
                     </p>
                   </div>
                 </container>

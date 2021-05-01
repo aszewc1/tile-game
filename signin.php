@@ -55,12 +55,9 @@
                             <a href="index.php">
                                 <input type="button" value="Cancel" class="cncl">
                             </a>
-                            <label>
-                                <input type="checkbox" checked="checked" name="remember" style="margin-bottom:15px"> Remember me
-                            </label>
                         </div>
                     </div>
-                    <p>By creating an account you agree to our <a href="#" style="color:dodgerblue">Terms & Privacy</a>.</p>
+                    <br>
                 </div>
             </form>
         </div>
