@@ -362,11 +362,15 @@ var Game = {
             canvas.widht = 64;
             canvas.height = 76;
             let context = canvas.getContext('2d');
-            context.drawImage(Loader.getImage(c), 0, 0, 64, 76 );
-            let jpg = canvas.toDataURL('image/jpg');
+            context.drawImage(Loader.getImage(c), 0, 0, 64, 76);
+            let jpg = canvas.toDataURL('svg');
+
+            var s = new XMLSerializer().serializeToString(set.arr[c].pic);
+            var encodedData = window.btoa(s);
+            console.log(encodedData);
             var idx = jpg.indexOf('base64,') + 'base64,'.length;
             var base = jpg.substring(idx);
-            zip.file(c + ".jpeg", base, {base64 : true});
+            zip.file(c + ".svg", encodedData, {base64 : true});
         }
     },
 
