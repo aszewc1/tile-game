@@ -315,6 +315,10 @@ var Game = {
         svBtn.setAttribute("id", "saveBtn");
         svBtn.setAttribute("class", "hbtn");
         controls.appendChild(svBtn);*/
+        map.tiles_placed = 0;
+        var t = document.createTextNode("Tiles placed: " + map.tiles_placed);
+        controls.setAttribute("id", "scorecard");
+        controls.appendChild(t);
         disp.appendChild(controls);
 
         if (!document.getElementById("undo-button")) {
@@ -610,6 +614,8 @@ var map = {
     setTile: function (col, row, num) {
         this.board[0][row * map.cols + col] = num;
         this.board[2][row * map.cols + col] = ++this.tiles_placed;
+        var score = document.getElementById("scorecard");
+        score.innerHTML = ("Tiles placed: " + map.tiles_placed);
     },
     /* function for undoing last move
      */
@@ -620,6 +626,9 @@ var map = {
                     this.board[0][i] = 0;
                     this.board[2][i] = 0;
                     this.tiles_placed--;
+
+                    var score = document.getElementById("scorecard");
+                    score.innerHTML = ("Tiles placed: " + this.tiles_placed);
                     break;
                 }
             }
