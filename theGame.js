@@ -173,7 +173,8 @@ function dragIt() {
                                 set.getT(map.getTile(c, r - 1)),
                                 set.getT(map.getTile(c, r + 1)),
                                 set.getT(map.getTile(c + 1, r)),
-                                set.getT(map.getTile(c - 1, r)));
+                                set.getT(map.getTile(c - 1, r)),
+                                set.getT(map.getTile(c, r)));
                 if (validMove) {
                     if (r == 1) {
                         map.addRow(r++);
@@ -315,8 +316,7 @@ var Game = {
         svBtn.setAttribute("id", "saveBtn");
         svBtn.setAttribute("class", "hbtn");
         controls.appendChild(svBtn);*/
-        map.tiles_placed = 0;
-        var t = document.createTextNode("Tiles placed: " + map.tiles_placed);
+        var t = document.createTextNode("Tiles placed: " + map.tile_score);
         controls.setAttribute("id", "scorecard");
         controls.appendChild(t);
         disp.appendChild(controls);
@@ -563,6 +563,7 @@ var map = {
     cols: 15,
     rows: 10,
     tiles_placed: 0,
+    tile_score: 0,
     tsize: 64,
     board: [[
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -614,8 +615,9 @@ var map = {
     setTile: function (col, row, num) {
         this.board[0][row * map.cols + col] = num;
         this.board[2][row * map.cols + col] = ++this.tiles_placed;
+        this.tile_score++;
         var score = document.getElementById("scorecard");
-        score.innerHTML = ("Tiles placed: " + map.tiles_placed);
+        score.innerHTML = ("Tiles placed: " + map.tile_score);
     },
     /* function for undoing last move
      */
@@ -626,9 +628,10 @@ var map = {
                     this.board[0][i] = 0;
                     this.board[2][i] = 0;
                     this.tiles_placed--;
+                    this.tile_score--;
 
                     var score = document.getElementById("scorecard");
-                    score.innerHTML = ("Tiles placed: " + this.tiles_placed);
+                    score.innerHTML = ("Tiles placed: " + this.tile_score);
                     break;
                 }
             }
@@ -882,7 +885,7 @@ function Tile (numID, n, s, e, w) {
      * @param w     the west tile
      * @return      true if the move is valid
      */
-    this.validMove = function (n, s, e, w) {
+    this.validMove = function (n, s, e, w, u) {
         var c = [n.south, s.north, e.west, w.east];
         var t = [this.north, this.south, this.east, this.west];
         var d = 0;
@@ -893,6 +896,7 @@ function Tile (numID, n, s, e, w) {
            d = (c[i] == 0) ? d + 1 : d;
         }
         if (d == 4) { return false; }
+        if (u.north != 0 && u.south !=0 && u.east != 0 && u.west != 0) { return false; }
         return true;
     };
 }
@@ -1349,11 +1353,15 @@ chooseGame = function (t = "U") {
         Hset = new Set();
         newHset(Hset);
         set = Hset;
+        map.tile_score = 3;
+        map.tiles_placed = 0;
     }
     else if (t == "J") {
         Jset = new Set();
         newJset(Jset);
         set = Jset;
+        map.tile_score = 3;
+        map.tiles_placed = 0;
     }
     else if (t == "U") {
         set = MYset;
@@ -1369,6 +1377,8 @@ chooseGame = function (t = "U") {
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
         ];
+        map.tile_score = 1;
+        map.tiles_placed = 0;
     }
     Game.run();
 }
